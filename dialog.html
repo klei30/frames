@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iframe with Chat Bubble</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+   .chat-widget {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 400px;  /* Increased width */
+    height: 600px; /* Increased height */
+    overflow: hidden;
+    transition: height 0.3s ease;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.chat-widget iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+
+
+        .chat-header {
+            display: flex; /* Updated from none */
+            justify-content: space-between; /* New style */
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .chat-header span {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .chat-bubble {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 60px;
+            height: 60px;
+            background-color: #333;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .chat-bubble img {
+            width: 50%; /* Adjusted for better positioning */
+            height: 50%;
+            margin: 25%; /* Centering the logo inside the bubble */
+        }
+
+        /* Responsive adjustments for chat widget */
+        @media only screen and (max-width: 600px) {
+            .chat-widget {
+                width: 100%;
+                bottom: 0;
+                right: 0;
+            }
+            .chat-widget iframe {
+                height: 300px; 
+            }
+        }
+    </style>
+    <script>
+        function toggleChat() {
+            const chatWidget = document.querySelector(".chat-widget");
+            const chatBubble = document.querySelector(".chat-bubble");
+            const chatHeader = document.querySelector(".chat-header");
+            const currentHeight = parseInt(window.getComputedStyle(chatWidget).height);
+
+            if (currentHeight === 0) {
+                chatWidget.style.height = "480px";
+                chatBubble.style.display = 'none';
+                chatHeader.querySelector('span').textContent = 'Chat'; /* Updated to change header text */
+            } else {
+                chatWidget.style.height = "0px";
+                chatBubble.style.display = 'flex';
+                chatHeader.querySelector('span').textContent = 'Close Chat'; /* Updated to change header text */
+            }
+        }
+    </script>
+</head>
+<body>
+
+<iframe src="https://e-albania.al/" width="100%" height="1000px"></iframe>
+
+<div class="chat-bubble" onclick="toggleChat()">
+    <img src="logo.svg" alt="Chat Logo">
+</div>
+
+<div class="chat-widget">
+    <div class="chat-header" onclick="toggleChat()">
+        <span>Chat</span>
+        <button onclick="event.stopPropagation(); toggleChat();">✖</button> <!-- Close button for chat -->
+    </div>
+    <iframe src="https://e-albania-chat.onrender.com/" frameborder="0"></iframe>
+</div>
+
+</body>
+</html>
